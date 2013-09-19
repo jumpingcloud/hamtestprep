@@ -9,23 +9,32 @@ class Test
 
 	def initialize
 		@questions = []
-		@questions = IO.readlines('questionpool.txt')
+		@pool = []
+		@question_num = []
 	end
 
 	def get_questions
     # Get the questions into an array,
     # Separate array for each question section
     x = 0
-    section = 0
+    section_num = 0
+    @questions = IO.readlines('questionpool.txt')
+    
 
     @questions.each do |line|
     	if ( line =~ /T{1}\d[A-Z]\s/ ) 
+    		# This is always ONE line so there's something
     		@section_num += 1
-    		newarr("@section_#{@section_num}", Array.new)
-
-
+    		@pool[x] = line
+    		# newarr("@section_#{@section_num}", Array.new)
+    	elsif ( line =~ /~~/ 
+    		# move to the next position in the array
+    		x += 1
+    	elsif ( line != /^$/ )
+    		@question_num << line
+    		@pool[x] = @question_num 
     	end
-    	x += 1
+
     end
 
 
